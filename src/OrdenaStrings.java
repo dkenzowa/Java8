@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class OrdenaStrings {
 
@@ -13,7 +13,7 @@ public class OrdenaStrings {
 		palavras.add("Casa do código");
 		palavras.add("Caelum");
 
-		Comparator<String> comparador = new ComparadorPorTamanho();
+		//Comparator<String> comparador = new ComparadorPorTamanho();
 		// Collections.sort(palavras, comparador);
 
 		// Java 8
@@ -27,10 +27,19 @@ public class OrdenaStrings {
 //			return 0;
 //		});
 
-		palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
+		//palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
 
+		palavras.sort(Comparator.comparing(s -> s.length()));
+		palavras.sort(Comparator.comparing(String::length));
+		
+//		Function<String, Integer> funcao = String::length;
+//		Comparator<String> comparador = Comparator.comparing(funcao);
+//		palavras.sort(comparador);
+		
 		System.out.println(palavras);
 
+		palavras.forEach(System.out::println);
+		
 		// Antes Java 8
 		for (String p : palavras) {
 			System.out.println(p);
@@ -47,19 +56,4 @@ public class OrdenaStrings {
 
 		palavras.forEach(t -> System.out.println(t));
 	}
-}
-
-class ComparadorPorTamanho implements Comparator<String> {
-
-	@Override
-	public int compare(String s1, String s2) {
-		if (s1.length() < s2.length()) {
-			return -1;
-		}
-		if (s1.length() > s2.length()) {
-			return 1;
-		}
-		return 0;
-	}
-
 }
